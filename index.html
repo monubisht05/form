@@ -3,23 +3,319 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
-   <marquee behavior="bouncing" direction="left"> <h1 style="color: aliceblue;">JAI BADRI VISHAL</h1></marquee>
-    <header class="header-container">
-        <div class="left">
-          <h1 style="text-align: center;">COURSE FEEDBACK FORM</h1>
-        </div>
-        <div class="right">
-            <h1><a href=""></a></h1>
-            <h1><a href="">ABOUT US</a></h1>
-        </div>
+    <title>Course Feedback Form</title>
+    <link rel="stylesheet" href="from.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            line-height: 1.6;
+            background-color: #f9f9f9;
+           
+        }
+
+        .form-container {
+            
+            max-width: 100%;
+            width: 90%;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            box-shadow: 2px 2px 12px rgba(0, 0, 0, 0.1);
+            background-color: #fff;
+        }
+
+        .form-container h1 {
+            text-align: center;
+            font-size: 1.8rem;
+        }
+
+        label {
+            font-weight: bold;
+            margin-top: 10px;
+            display: block;
+        }
+
+        input, select, textarea {
+            width: 100%; /* Full width inside the container */
+            padding: 10px;
+            margin: 8px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 1rem;
+            box-sizing: border-box; /* Ensures consistent sizing */
+        }
+
+        textarea {
+            resize: vertical;
+        }
+
+        .feedback-questions {
+            margin-top: 20px;
+        }
+
+        .submit-btn {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            border-radius: 4px;
+            font-size: 1rem;
+            width: 100%; /* Full width for better responsiveness */
+        }
+
+        .submit-btn:hover {
+            background-color: #45a049;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .form-container {
+                width: 95%;
+                padding: 15px;
+            }
+
+            .form-container h1 {
+                font-size: 1.5rem;
+            }
+
+            input, select, textarea {
+                font-size: 0.9rem;
+            }
+
+            .feedback-questions label {
+                text-align: justify; /* Ensures text alignment is justified */
+            }
+
+            .submit-btn {
+                font-size: 0.9rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+    .form-container {
+        margin: 0 auto; /* Centers the form horizontally */
+        padding: 10px;  /* Ensures proper spacing within the form */
+        width: 100%;    /* Takes full width of the screen */
+        box-sizing: border-box; /* Includes padding and border in the width */
+    }
+}
+
+            .form-container h1 {
+                font-size: 1.2rem;
+            }
+
+            input, select, textarea {
+                font-size: 0.8rem;
+            }
+
+            .feedback-questions label {
+                text-align: justify; /* Ensures text alignment is justified */
+            }
+
+            .submit-btn {
+                font-size: 0.8rem;
+            }
         
-    </header>
-    <section class="section-container">
-        <button href="form.html"><a href="form.html">go to form</a></button>
-    </section>
+    </style>
+</head>
+<body><marquee behavior="alternate" direction="right"><h1 style="color: white;">Your Valuable Feedback is Important for us</h1></marquee>
+    <form name="submit-to-google-sheet">
+
+    
+            <div class="form-container">
+        
+                <h1 style=" 
+    color: rgb(252, 252, 252); 
+    background-color: rgb(30, 96, 30); 
+    text-align: center; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    padding: 10px;">
+    <!-- Left Image -->
+    <img src="crest.png" alt="Crest" style="width: 35px; height: auto; margin-right: 15px;">
+    <!-- Text -->
+    <span style="flex: 1; text-align: center; text-decoration: underline; font-size: 14px;">COURSE FEEDBACK FORM</span>
+    <!-- Right Image -->
+    <img src="crest.png" alt="Crest" style="width: 35px; height: auto; margin-left: 15px;">
+</h1>
+
+            
+        <!-- <form action="/submit-feedback" method="post"> -->
+            <label for="armyNumber" >Army Number:-</label>
+            <input type="text" id="armyNumber" autocomplete="off" name="armyNumber" required>
+
+            <label for="rank">Rank:-</label>
+            <select name="rank" id="rank" required>
+                <option value="" disabled selected>-- Select your rank --</option>
+                <option value="AV/GD">AV/GD</option>
+                <option value="AV/CLK">AV/CLK</option>
+                <option value="RFN">RFN</option>
+                <option value="LNK">LNK</option>
+                <option value="NK">NK</option>
+                <option value="HAV">HAV</option>
+                <option value="NB SUB">NB SUB</option>
+                <option value="SUB">SUB</option>
+            </select>
+
+            <label for="name">Enter Your Name:-</label>
+            <input type="text" id="name" name="name" autocomplete="off" placeholder="Please enter a valid name." required>
+
+            <label for="unit">Unit:-</label>
+<input type="text" id="unit" name="unit" autocomplete="off" required>
+<ul id="suggestions" style="border: 1px solid #ccc; display: none; position: absolute; background: white; z-index: 1000;"></ul>
+
+<script>
+    const inputField = document.getElementById("unit");
+    const suggestionsList = document.getElementById("suggestions");
+
+    // Array of predefined suggestions for numbers 1 to 22 and specific units
+    const units = [
+        ...Array.from({ length: 22 }, (_, i) => `${i + 1} GARH RIF`), // Numbers 1 to 22 with "GARH RIF"
+        "GARHWAL SCOUTS",
+        "GRRC"
+    ];
+
+    inputField.addEventListener("input", () => {
+        const query = inputField.value.trim().toLowerCase();
+        let filteredSuggestions = [];
+
+        // If input starts with "g", show specific suggestions
+        if (query.startsWith("g")) {
+            filteredSuggestions = ["GARHWAL SCOUTS", "GRRC"];
+        } 
+        // If input is a number between 1 and 22, show the corresponding GARH RIF suggestion
+        else if (!isNaN(query) && query >= 1 && query <= 22) {
+            filteredSuggestions = [`${query} GARH RIF`];
+        } 
+        // Default filter logic for other cases
+        else if (query) {
+            filteredSuggestions = units.filter(unit => unit.toLowerCase().includes(query));
+        }
+
+        // Clear the suggestions list
+        suggestionsList.innerHTML = "";
+
+        // Display suggestions if there are any
+        if (filteredSuggestions.length) {
+            suggestionsList.style.display = "block";
+            filteredSuggestions.forEach(suggestion => {
+                const li = document.createElement("li");
+                li.textContent = suggestion;
+                li.style.padding = "5px";
+                li.style.cursor = "pointer";
+
+                // Populate input field when suggestion is clicked
+                li.addEventListener("click", () => {
+                    inputField.value = suggestion;
+                    suggestionsList.style.display = "none";
+                });
+
+                suggestionsList.appendChild(li);
+            });
+        } else {
+            suggestionsList.style.display = "none";
+        }
+    });
+
+    // Hide suggestions if clicked outside the input field
+    document.addEventListener("click", (e) => {
+        if (!suggestionsList.contains(e.target) && e.target !== inputField) {
+            suggestionsList.style.display = "none";
+        }
+    });
+</script>
+
+
+            <label for="course">Course:-</label>
+            <input type="text" id="course" name="course" required>
+
+            <div class="feedback-questions">
+                <p><strong>Feedback Questions:-</strong></p>
+
+                <label for="q1">* ADM side se apko kis mai improvement chaiye?</label>
+                <select id="q1" name="q1" required>
+                    <option value="">-- Select an option --</option>
+                    <option value="Food">Food</option>
+                    <option value="Toilet">Toilet</option>
+                    <option value="Living">Living</option>
+                </select>
+
+                <label for="q2">* Course mai Instr dwara apko sikhaya/padaya gaya usko madhya nazar rakhte hue ap instr ko ky rating dena chahenge?</label>
+                <select id="q2" name="q2" required>
+                    <option value="">-- Select an option --</option>
+                    <option value="Excellent">Excellent</option>
+                    <option value="Good">Good</option>
+                    <option value="Average">Average</option>
+                    <option value="Poor">Poor</option>
+                </select>
+
+                <label for="q3">* Apke hisab se course ka Time Duration?</label>
+                <select id="q3" name="q3" required>
+                    <option value="">-- Select an option --</option>
+                    <option value="More">Jadya Hona Chaiye</option>
+                    <option value="Sufficient">Sufficient</option>
+                    <option value="Less">Kam Hona Chaiye</option>
+                </select>
+
+                <label for="q4">* Kya Course mai Tech Eqpt ki aur jarurt hai?</label>
+                <select id="q4" name="q4" required>
+                    <option value="">-- Select an option --</option>
+                    <option value="Yes">Yes</option>
+                    <option value="No">No</option>
+                </select>
+
+                <label for="q5">* Apne Overall Experience ko ap kitni rating dena chahge?</label>
+                <select id="q5" name="q5" required>
+                    <option value="">-- Select an option --</option>
+                    <option value="Excellent">Excellent</option>
+                    <option value="Good">Good</option>
+                    <option value="Fair">Fair</option>
+                </select>
+
+                <label for="feedback">Any additional feedback or suggestions?</label>
+                <textarea id="feedback" name="feedback" rows="4" placeholder="Your comments here..."></textarea>
+            </div>
+
+            <button type="submit" class="submit-btn">Submit</button>
+            
+
+            
+<style>
+    .submit-btn {
+        width: 120px;  /* Set width */
+        height: 40px;  /* Set height */
+    }
+</style>
+
+        
+        </form>
+    </div>
+    <script>
+        const scriptURL = 'https://script.google.com/macros/s/AKfycbzjnVGvvtPJPAIj0WBNYYaFum9AL7RvIu8dVSsp-ZWX0moctxSuMKnL6IkWw1LecfjA/exec';
+        const form = document.forms['submit-to-google-sheet'];
+    
+        form.addEventListener('submit', e => {
+            e.preventDefault();
+    
+            fetch(scriptURL, { method: 'POST', body: new FormData(form) })
+                .then(response => {
+                    console.log('Success!', response);
+                    // Redirect to the "Thank You" page
+                    window.location.href = 'thankyou.html'; // Update with the correct path to your thank-you page
+                })
+                .catch(error => console.error('Error!', error.message));
+        });
+    </script>
+    
+
+
+
+
+
 </body>
 </html>
